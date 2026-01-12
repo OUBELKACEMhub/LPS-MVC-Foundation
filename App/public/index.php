@@ -1,9 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
-
-$loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../templates');
+$loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../templates/layouts');
 
 $twig = new \Twig\Environment($loader, [
     // Optionnel : Désactiver le cache pour le développement pour voir les changements immédiatement
@@ -11,12 +10,21 @@ $twig = new \Twig\Environment($loader, [
     'debug' => true,
 ]);
 
-// 3. Essayer d'afficher une page
+
+
+$fakeUser = [
+    'name' => 'Ahmed',
+    'points' => 450,
+    'is_logged' => true
+];
+
 try {
+    // On passe le tableau 'user' à la vue
     echo $twig->render('test.html.twig', [
-        'message' => 'Félicitations1 ! Twig fonctionne correctement1.',
-        'message2' => 'Félicitations2 ! Twig fonctionne correctement2.'
+        'message' => 'Test réussi avec succès !',
+        'user' => $fakeUser  // <--- C'est ici que la magie opère
     ]);
 } catch (Exception $e) {
     echo "Erreur : " . $e->getMessage();
 }
+

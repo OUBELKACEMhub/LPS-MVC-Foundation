@@ -1,0 +1,50 @@
+{# App/templates/layouts/base.html.twig #}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopEasy - {% block title %}Fidélité{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 flex flex-col min-h-screen">
+
+    <header class="bg-blue-600 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="/" class="text-2xl font-bold flex items-center gap-2">
+                🛍️ ShopEasy <span class="text-sm bg-blue-800 px-2 py-1 rounded">Loyalty</span>
+            </a>
+
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="/dashboard" class="hover:text-blue-200 transition">Mon Solde</a></li>
+                    <li><a href="/rewards" class="hover:text-blue-200 transition">Récompenses</a></li>
+                    <li><a href="/history" class="hover:text-blue-200 transition">Historique</a></li>
+                </ul>
+            </nav>
+
+            <div class="flex items-center gap-4">
+                <span class="text-sm">Bonjour, <strong>{{ user['name']|default('Invité') }}</strong></span>
+                <a href="/logout" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded text-sm transition">
+                    Déconnexion
+                </a>
+            </div>
+        </div>
+    </header>
+    <main class="flex-grow container mx-auto px-4 py-8">
+        {% block body %}
+            {% endblock %}
+    </main>
+
+    <footer class="bg-gray-800 text-gray-300 py-6 mt-auto">
+        <div class="container mx-auto px-4 text-center">
+            <p class="mb-2">&copy; {{ "now"|date("Y") }} ShopEasy Loyalty Program. Tous droits réservés.</p>
+            <div class="text-sm space-x-4">
+                <a href="#" class="hover:text-white">Conditions d'utilisation</a>
+                <span class="text-gray-600">|</span>
+                <a href="#" class="hover:text-white">Support</a>
+            </div>
+        </div>
+    </footer>
+    </body>
+</html>
