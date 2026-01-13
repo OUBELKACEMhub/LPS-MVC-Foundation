@@ -1,0 +1,12 @@
+<IfModule mod_rewrite.c>
+    Options -MultiViews
+    RewriteEngine On
+
+    # Si le fichier demandé (ex: image, css) existe vraiment, on le sert directement
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Sinon, on redirige TOUTES les requêtes vers index.php
+    RewriteRule ^ index.php [QSA,L]
+
+</IfModule>

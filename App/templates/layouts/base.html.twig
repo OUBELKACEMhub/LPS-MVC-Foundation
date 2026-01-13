@@ -1,5 +1,3 @@
-
-
 {# App/templates/layouts/base.html.twig #}
 <!DOCTYPE html>
 <html lang="fr">
@@ -10,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 flex flex-col min-h-screen">
-
+    <h1>Hello {{nom}}</h1>
     <header class="bg-blue-600 text-white shadow-lg">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <a href="/" class="text-2xl font-bold flex items-center gap-2">
@@ -26,27 +24,32 @@
             </nav>
 
             <div class="flex items-center gap-4">
-                <span class="text-sm">Bonjour, <strong>{{ user['name']|default('Invité') }}</strong></span>
-                <a href="/logout" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded text-sm transition">
-                    Déconnexion
-                </a>
+                <span class="text-sm">
+                    Bonjour, <strong>{{ user.name|default('Invité') }}</strong>
+                </span>
+                {% if user.is_logged is defined and user.is_logged %}
+                    <a href="/logout" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded text-sm transition">
+                        Déconnexion
+                    </a>
+                {% else %}
+                    <a href="/login" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded text-sm transition">
+                        Connexion
+                    </a>
+                {% endif %}
             </div>
         </div>
     </header>
+
     <main class="flex-grow container mx-auto px-4 py-8">
         {% block body %}
-            {% endblock %}
+        {% endblock %}
     </main>
 
     <footer class="bg-gray-800 text-gray-300 py-6 mt-auto">
         <div class="container mx-auto px-4 text-center">
-            <p class="mb-2">&copy; {{ "now"|date("Y") }} ShopEasy Loyalty Program. Tous droits réservés.</p>
-            <div class="text-sm space-x-4">
-                <a href="#" class="hover:text-white">Conditions d'utilisation</a>
-                <span class="text-gray-600">|</span>
-                <a href="#" class="hover:text-white">Support</a>
-            </div>
+            <p class="mb-2">&copy; {{ "now"|date("Y") }} ShopEasy. Tous droits réservés.</p>
         </div>
     </footer>
-    </body>
+
+</body>
 </html>
