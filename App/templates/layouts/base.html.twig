@@ -8,18 +8,19 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 flex flex-col min-h-screen">
-    <h1>Hello {{nom}}</h1>
+    
     <header class="bg-blue-600 text-white shadow-lg">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="/" class="text-2xl font-bold flex items-center gap-2">
+            
+            <a href="index.php?page=home" class="text-2xl font-bold flex items-center gap-2">
                 🛍️ ShopEasy <span class="text-sm bg-blue-800 px-2 py-1 rounded">Loyalty</span>
             </a>
 
             <nav>
                 <ul class="flex space-x-6">
-                    <li><a href="/dashboard" class="hover:text-blue-200 transition">Mon Solde</a></li>
-                    <li><a href="/rewards" class="hover:text-blue-200 transition">Récompenses</a></li>
-                    <li><a href="/history" class="hover:text-blue-200 transition">Historique</a></li>
+                    <li><a href="index.php?page=dashboard" class="hover:text-blue-200 transition">Mon Solde</a></li>
+                    <li><a href="index.php?page=rewards" class="hover:text-blue-200 transition">Récompenses</a></li>
+                    <li><a href="index.php?page=history" class="hover:text-blue-200 transition">Historique</a></li>
                 </ul>
             </nav>
 
@@ -27,6 +28,7 @@
                 <span class="text-sm">
                     Bonjour, <strong>{{ user.name|default('Invité') }}</strong>
                 </span>
+                
                 {% if user.is_logged is defined and user.is_logged %}
                     <a href="/logout" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded text-sm transition">
                         Déconnexion

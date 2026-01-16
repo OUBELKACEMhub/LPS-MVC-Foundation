@@ -1,0 +1,54 @@
+{# App/templates/auth/register.html.twig #}
+{% extends "layouts/base.html.twig" %}
+
+{% block title %}Créer un compte - ShopEasy{% endblock %}
+
+{% block body %}
+<div class="flex items-center justify-center min-h-[80vh] bg-gray-50">
+    <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-md border border-gray-100">
+        
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">Créer un compte 🚀</h1>
+            <p class="text-gray-500 mt-2">Rejoignez le programme de fidélité ShopEasy</p>
+        </div>
+
+       
+        {% if error %}
+            <div class="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded shadow-sm" role="alert">
+                <p class="font-bold">Oups !</p>
+                <p class="text-sm">{{ error }}</p>
+            </div>
+        {% endif %}
+
+        <form action="/register" method="POST" class="space-y-5">
+            
+            {# Champ: Nom Complet #}
+            <div>
+                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nom complet</label>
+                <input type="text" name="name" id="name" required 
+                    value="{{ last_name|default('') }}"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                    placeholder="Ex: Khalid El Idrissi">
+            </div>
+
+            {# Champ: Email #}
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email professionnel</label>
+                <input type="email" name="email" id="email" required 
+                    value="{{ last_email|default('') }}"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                    placeholder="nom@exemple.com">
+            </div>
+
+            {# Champ: Mot de passe #}
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
+                <input type="password" name="password" id="password" required minlength="6"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                    placeholder="••••••••">
+                <p class="text-xs text-gray-400 mt-1">Au moins 6 caractères</p>
+            </div>
+
+            {# Bouton Submit #}
+            <button type="submit" 
+                class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition duration-200

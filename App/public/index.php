@@ -1,27 +1,43 @@
 <?php
-// App/public/index.php
 
-require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
-$loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../templates');
+// use App\Core\Router;
+// use App\Core\RouterException;
+// use App\Controllers\AuthController;
+// use App\Controllers\DashboardController;
 
-$twig = new \Twig\Environment($loader, [
-    'cache' => false, 
-    'debug' => true
-]);
+// session_start();
 
-// 3. Données de test
-$fakeUser = [
-    'name' => 'Ahmed',
-    'points' => 450,
-    'is_logged' => true
-];
+// $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../views'); 
+// $twig = new \Twig\Environment($loader, [
+//     'cache' => false, 
+//     'debug' => true
+// ]);
 
-try {
-    echo $twig->render('test.html.twig', [
-        'nom' => 'Ahmed',
-        'user' => $fakeUser 
-    ]);
-} catch (Exception $e) {
-    echo "Erreur : " . $e->getMessage();
-}
+// $authController = new AuthController($twig);
+// $dashboardController = new DashboardController($twig);
+
+// $router = new Router($_GET['url'] ?? '/');
+
+// // --- DÉFINITION DES ROUTES ---
+
+// $router->get('/', [$authController, 'showLogin']);
+
+// $router->post('/login', [$authController, 'login']);
+
+// $router->get('/logout', [$authController, 'logout']);
+
+// $router->get('/dashboard', [$dashboardController, 'index']);
+
+
+// try {
+//     $router->run();
+// } catch (RouterException $e) {
+//     header("HTTP/1.0 404 Not Found");
+//     echo $twig->render('404.html.twig', ['error' => $e->getMessage()]);
+// } catch (Exception $e) {
+//     echo "Erreur système : " . $e->getMessage();
+// }
+
+echo "hello";
