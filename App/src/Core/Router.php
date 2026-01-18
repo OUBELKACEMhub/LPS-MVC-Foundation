@@ -1,28 +1,24 @@
 <?php
-namespace Core;
+namespace App\Core;
 
 class Router {
     private $routes = [];
-    private $container;
+    private $twig;
 
-    public function __construct(Container $container) {
-        $this->container = $container;
+    public function __construct($twig) {
+        $this->twig = $twig;
     }
 
-    public function add($method, $uri, $controllerAction) {
-        $this->routes[] = [
-            'method' => $method,
-            'uri' => $uri,
-            'handler' => $controllerAction
-        ];
-    }
+    // ... méthodes add, get, post ...
 
-    public function dispatch($requestUri, $requestMethod) {
-        foreach ($this->routes as $route) {
-            if ($this->matches($route, $requestUri, $requestMethod)) {
-                return $this->executeHandler($route['handler']);
-            }
+    private function executeHandler($handler) {
+        list($controllerName, $method) = explode('@', $handler);
+        
+        if (class_exists($controllerName)) {
+            // On injecte Twig au contrôleur ici
+            $controller = new $controllerName($this->twig);
+            return $controller->$method();
         }
-        return $this->container->get('ErrorController')->notFound();
+        die("Contrôleur $controllerName introuvable.");
     }
 }

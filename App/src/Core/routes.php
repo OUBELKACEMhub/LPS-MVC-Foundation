@@ -1,32 +1,20 @@
 <?php
+namespace App\Core;
+use App\Core\Router;
 
-use Core\Router;
+// On assume que $router est passé depuis index.php
+$router=new Router();
 
-$router = new Router();
+$router->get("/", "App\Controllers\HomeController@index");
+$router->get("/login", "App\Controllers\AuthController@login");
 
-$router->get("/", "Controllers\\HomeController@index");
-$router->add('GET', '/login', 'AuthController@login');
-$router->add('POST', '/login', 'AuthController@login');
-$router->add('POST', '/register', 'AuthController@register');
-$router->add('GET', '/logout', 'AuthController@logout');
+$router->post("/login", "App\Controllers\AuthController@login");
+$router->get("/register", "App\Controllers\AuthController@register");
+$router->post("/register", "App\Controllers\AuthController@register");
+$router->get("/logout", "App\Controllers\AuthController@logout");
 
+$router->get("/dashboard", "App\Controllers\DashboardController@index");
 
-$router->add('GET', '/dashboard', 'DashboardController@index');
-$router->add('GET', '/profile', 'DashboardController@profile');
-
-
-$router->add('GET', '/points/history', 'PointsController@history');
-$router->add('POST', '/points/add', 'PointsController@add');
-$router->add('GET', '/points/expiring', 'PointsController@expiring');
-
-
-$router->add('GET', '/rewards', 'RewardsController@index');
-$router->add('GET', '/rewards/{id}', 'RewardsController@show');
-$router->add('POST', '/rewards/{id}/redeem', 'RewardsController@redeem');
-
-
-$router->generate_path();
-// $router->add('GET', '/dashboard', 'ShopController@index');
-// $router->add('GET', '/profile', 'ShopController@profile');4
-
-?>
+// Exemple Shop (puisque tu as ShopController)
+$router->get("/shop", "App\Controllers\ShopController@index");
+$router->get("/shop/cart", "App\Controllers\ShopController@cart");

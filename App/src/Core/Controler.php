@@ -1,9 +1,15 @@
 <?php
-namespace Core;
+namespace App\Core; // Assurez-vous que le namespace commence par App\
 
 class Controller {
+    protected $twig;
+
+    // On reçoit Twig par injection
+    public function __construct($twig) {
+        $this->twig = $twig;
+    }
+
     public function render($template, $data = []) {
-        extract($data);
-        include __DIR__ . "/Template/" . $template . "html.twig";
+        echo $this->twig->render($Views, $data);
     }
 }

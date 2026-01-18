@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace App\src\Models;
 
 class Point  {
     
