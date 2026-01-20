@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends "layouts/login.html.twig" %}
 
 {% block title %}ShopEasy - Commande confirmée{% endblock %}
 
@@ -60,10 +60,10 @@
                 Calcul: {{ purchase.total|number_format(2, '.', ' ') }} $ / 100 = {{ (purchase.total / 100)|round(0, 'floor') }} tranches x 10 = <strong>{{ purchase.points_earned }} points</strong>
             </p>
         </div>
-
+        
         <div class="result-actions">
-            <a href="/shop" class="btn btn-primary btn-large">Continuer mes achats</a>
-            <a href="/shop/reset" class="btn btn-secondary">Réinitialiser la session</a>
+            <a href="/Loyalty%20Points%20System/App/public" class="btn btn-primary btn-large">Continuer mes achats</a>
+            {# <a href="/shop/reset" class="btn btn-secondary">Réinitialiser la session</a> #}
         </div>
     </div>
 {% endblock %}

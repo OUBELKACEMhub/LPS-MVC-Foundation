@@ -3,25 +3,25 @@ namespace App\src\Controllers;
 
 use App\src\Repositories\ProductRepository; // T-akked mn l-namespace shih
 
+
 class HomeController {
     private $twig;
     private $productRepo;
 
-    // 1. Injecter Twig u l-Repository f l-constructeur (Best Practice)
-    public function __construct($twig, ProductRepository $productRepo) {
-        $this->twig = $twig;
-        $this->productRepo = $productRepo;
-    }
+   public function __construct($twig, $pdo) {
+    $this->twig = $twig;
+    $this->productRepo = new \App\src\Repositories\ProductRepository($pdo);
+}
 
     public function index() {
         // 2. Jib l-data mn l-Repository
         $allProducts = $this->productRepo->findAll();
        
         $data = [
-            "name" => "Ahmed",
-            "points" => 100,
+            "name" => $_SESSION['user_name'],
+            "points" => $_SESSION['user_points'],
             "title" => "Accueil",
-            "products" => $allProducts // Islah l-syntax: khdem b string key "products"
+            "products" => $allProducts 
         ];
 
         // 3. Affichage

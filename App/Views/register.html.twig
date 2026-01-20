@@ -1,9 +1,9 @@
 {# App/templates/auth/register.html.twig #}
-{% extends "layouts/base.html.twig" %}
+{% extends "layouts/login.html.twig" %}
 
 {% block title %}Créer un compte - ShopEasy{% endblock %}
 
-{% block body %}
+{% block content %}
 <div class="flex items-center justify-center min-h-[80vh] bg-gray-50">
     <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-md border border-gray-100">
         
@@ -20,7 +20,7 @@
             </div>
         {% endif %}
 
-        <form action="/register" method="POST" class="space-y-5">
+        <form action="/Loyalty%20Points%20System/App/public/register" method="POST" class="space-y-5">
             
             {# Champ: Nom Complet #}
             <div>
@@ -48,7 +48,19 @@
                     placeholder="••••••••">
                 <p class="text-xs text-gray-400 mt-1">Au moins 6 caractères</p>
             </div>
-
-            {# Bouton Submit #}
+{# T-kemla dial l-bouton submit #}
             <button type="submit" 
-                class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition duration-200
+                class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition duration-200 transform hover:scale-[1.02] shadow-lg">
+                S'inscrire et gagner mes points 🎁
+            </button>
+
+            <div class="text-center mt-6 text-sm text-gray-600">
+                Vous avez déjà un compte ? 
+                <a href="/Loyalty%20Points%20System/App/public/login" class="text-blue-600 font-bold hover:underline">
+                    Se connecter
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

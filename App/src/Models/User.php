@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace App\src\Models;
 
 class User {
     private $id;
@@ -10,10 +10,10 @@ class User {
     private $created_at;
 
     // Constructeur
-    public function __construct($id, $email, $password, $name, $total_points = 0, $created_at = null) {
+    public function __construct($id, $email, $password, $name, $total_points = 100, $created_at = null) {
         $this->id = $id;
         $this->email = $email;
-        $this->password_hash = hasherMotDePasse($password);
+        $this->password_hash = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
         $this->name = $name;
         $this->total_points = $total_points;
         $this->created_at = $created_at ?? date('Y-m-d H:i:s');
@@ -22,26 +22,36 @@ class User {
 
 
 
+  private function hasherMotDePasse(string $password): string {
+    
+    return password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
+}
 
-
-    public function findByEmail($email) {
+    public function findByEmail(string $email): ?User {
         $stmt = $this->db->prepare("SELECT * FROM users WHERE email = :email");
         $stmt->execute(['email' => $email]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$row) return null;
+
+       return  new User($row['id'], $row['email'], $row['password_hash'], $row['name'], $row['createdat']);
+      
     }
 
-    public function create(array $data) {
-        $sql = "INSERT INTO users (name, email, password_hash, total_points, created_at) 
-                VALUES (:name, :email, :password_hash, 0, NOW())"; 
-        
-        $stmt = $this->db->prepare($sql);
-        
-        return $stmt->execute([
-            ':name' => $data['name'],
-            ':email' => $data['email'],
-            ':password_hash' => password_hash($data['password'], PASSWORD_BCRYPT) 
-        ]);
+
+
+
+     public function findById(int $id): ?User {
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE id = :id");
+        $stmt->execute(['id' => $id]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$row) return null;
+
+        return new User($row['id'], $row['email'], $row['password_hash'], $row['name'],$row['total_points'], $row['createdat']);
     }
+
+   
 
     
     public function getId() {
@@ -82,9 +92,7 @@ class User {
         return password_verify($password, $this->password_hash);
     }
 
-    function hasherMotDePasse($password) {
-    return password_hash($password, PASSWORD_DEFAULT);
-}
-}
+  
 
 
+}
