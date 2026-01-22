@@ -30,10 +30,6 @@ class ShopController
     }
 
 
-
-
-
-
 public function cart(): void
 {
     

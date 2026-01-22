@@ -30,9 +30,10 @@ class RewardsController  {
 
         $rewards = $this->rewardModel->getAll(true);
         
-        $this->twig->render('catalog.html.twig', [
+        echo $this->twig->render('catalog.html.twig', [
             'rewards' => $rewards,
-            'user_points' => $_SESSION['total_points'] ?? 0,
+            'user_points' => $_SESSION['user_points'] ?? 0,
+            'points' => $_SESSION['user_points'] ?? 0,
             'filter' => 'all'
         ]);
 
