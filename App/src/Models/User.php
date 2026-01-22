@@ -9,7 +9,6 @@ class User {
     private $total_points;
     private $created_at;
 
-    // Constructeur
     public function __construct($id, $email, $password, $name, $total_points = 100, $created_at = null) {
         $this->id = $id;
         $this->email = $email;

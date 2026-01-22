@@ -9,7 +9,7 @@ class Product {
     private $price;
     private $icon;
 
-    // Constructeur bach t-initialiser l-data
+    // Constructeur bach t-initialiser 
     public function __construct($id, $name, $description, $price, $icon) {
         $this->id = $id;
         $this->name = $name;

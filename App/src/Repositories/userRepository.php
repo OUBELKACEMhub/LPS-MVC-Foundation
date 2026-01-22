@@ -6,7 +6,7 @@ use PDO;
 class UserRepository   {
     private $db;
     
-   
+   //constructeur
     public function __construct(PDO $db) {
         $this->db = $db;
         

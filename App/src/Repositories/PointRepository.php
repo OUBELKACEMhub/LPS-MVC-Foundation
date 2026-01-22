@@ -33,7 +33,6 @@ class PointRepository  {
         return $points;
     }
 
-    // Create: Sweb point jdid
     public function save(Point $point): bool {
         $sql = "INSERT INTO points_transactions (user_id, type, amount, description, balance_after, createdat) 
                 VALUES (:user_id, :type, :amount, :description, :balance_after, :createdat)";

@@ -8,7 +8,6 @@ class Reward {
     private $descreption;
     private $stock;
 
-    // Constructeur
     public function __construct($id, $name, $points_required = 0, $descreption = null,$stock) {
         $this->id = $id;
         $this->name = $name;

@@ -11,7 +11,7 @@ class Point  {
     private $balance_after;
     private $createdat;
 
-    // Constructeur
+    // Const
     public function __construct($id, $user_id, $type, $amount = 0, $description = null,$balance_after,$createdat) {
         $this->id = $id;
         $this->user_id = $user_id;
