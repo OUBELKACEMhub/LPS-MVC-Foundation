@@ -1,7 +1,7 @@
 <?php
-namespace App\src\Models\Repositories;
-
+namespace App\src\Repositories;
 use App\src\Models\Point;
+
 use PDO;
 
 class PointRepository  {
@@ -50,7 +50,7 @@ class PointRepository  {
     }
 
 public function findAll(): array {
-    $sql = "SELECT * FROM points_transactions ORDER BY transaction_date DESC";
+    $sql = "SELECT * FROM points_transactions ORDER BY createdat DESC";
     
     $stmt = $this->db->prepare($sql);
     $stmt->execute();

@@ -1,13 +1,15 @@
 <?php
 class PointsController {
     private $twig;
+    private $db;
 
-    public function __construct($twig) {
+    public function __construct($twig,$db) {
         $this->twig = $twig;
+        $this->db = $db;
     }
 
     public function showProfile() {
-        $userRepository= new PointRepository();
+        $userRepository= new PointRepository($this->db);
         $user = ['name' => 'Amine', 'loyalty_points' => 150]; // Masalan mn DB
         
         // 2. Affichi b Twig

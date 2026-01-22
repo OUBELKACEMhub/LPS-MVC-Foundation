@@ -8,9 +8,9 @@ class AuthController {
     private $twig;
     private $userRepo;
 
-   public function __construct($twig, $pdo, $productRepo, $userRepo) {
+   public function __construct($twig, $pdo) {
         $this->twig = $twig;
-        $this->userRepo = $userRepo; 
+        $this->userRepo = new UserRepository($pdo); 
     }
 
    public function login() {
