@@ -35,7 +35,7 @@ class PointRepository  {
 
     // Create: Sweb point jdid
     public function save(Point $point): bool {
-        $sql = "INSERT INTO points (user_id, type, amount, description, balance_after, createdat) 
+        $sql = "INSERT INTO points_transactions (user_id, type, amount, description, balance_after, createdat) 
                 VALUES (:user_id, :type, :amount, :description, :balance_after, :createdat)";
         
         $stmt = $this->db->prepare($sql);
@@ -50,8 +50,18 @@ class PointRepository  {
         ]);
     }
 
+public function findAll(): array {
+    $sql = "SELECT * FROM points_transactions ORDER BY transaction_date DESC";
+    
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute();
+   
+    return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+}
+
+
     public function findById(int $id): ?Point {
-        $stmt = $this->db->prepare("SELECT * FROM points WHERE id = :id");
+        $stmt = $this->db->prepare("SELECT * FROM points_transactions WHERE id = :id");
         $stmt->execute(['id' => $id]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -61,7 +71,53 @@ class PointRepository  {
     }
 
     public function delete(int $id): bool {
-        $stmt = $this->db->prepare("DELETE FROM points WHERE id = :id");
+        $stmt = $this->db->prepare("DELETE FROM points_transactions WHERE id = :id");
         return $stmt->execute(['id' => $id]);
     }
+
+
+
+
+
+
+
+
+
+
+    public function addTransaction($userId, $type, $amount, $description = '') {
+        
+        $userRepo = new userRepository();
+        $user = $userRepo->findById($userId);
+        $currentBalance = $user->getgetTotalPoints();
+        
+        
+        if ($type === 'earned') {
+            $newBalance = $currentBalance + $amount;
+        } elseif ($type === 'redeemed' || $type === 'expired') {
+            $newBalance = $currentBalance - $amount;
+        } else {
+            $newBalance = $currentBalance;
+        }
+        
+        
+        $userRepo->updatePoints($userId, $newBalance);
+        
+        
+        $stmt = $this->db->prepare("
+            INSERT INTO points_transactions 
+            (user_id, type, amount, description, balance_after) 
+            VALUES (?, ?, ?, ?, ?)
+        ");
+        
+        return $stmt->execute([
+            $userId,
+            $type,
+            $amount,
+            $description,
+            $newBalance
+        ]);
+    }
+    
+
+
 }
