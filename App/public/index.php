@@ -12,7 +12,7 @@ use App\src\Repositories\UserRepository;
 use App\src\Repositories\PointRepository;
 
 session_start();
-// 1. Initialisation dyal les dépendances
+
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../Views');
 $twig = new \Twig\Environment($loader, ['cache' => false]);
 $pdo = Database::getInstance()->getConnection();
@@ -40,9 +40,11 @@ $router->get('/cart/checkout', [ShopController::class, 'checkout']);
  $router->post('/process_checkout', [ShopController::class, 'processCheckout']);
  $router->get('/purchase-result', [ShopController::class, 'purchaseResult']);
 
- $router->get('/rewards', [RewardsController::class, 'index']);
- $router->get('/rewards/affordable', [RewardsController::class, 'affordable']);
- $router->get('/rewards/show/{id}', [RewardsController::class, 'show']);
+$router->get('/rewards',   [RewardsController::class, 'index']);
+$router->get('/rewards/affordable', [RewardsController::class, 'affordable']);
+$router->get('/rewards/show/{id}',  [RewardsController::class, 'show']);
+$router->post('/rewards/redeem/{id}', [RewardsController::class, 'redeem']);   // ← typo corrigé + {id} ajouté
+$router->get('/rewards/success',  [RewardsController::class, 'success']);
  
 
 

@@ -1,0 +1,160 @@
+{% extends "layouts/base.html.twig" %}
+
+{% block title %}Récompense échangée ! - ShopEasy Loyalty{% endblock %}
+
+{% block content %}
+<div class="success-container">
+
+    {# ── Icône + titre ── #}
+    <div class="success-icon">✅</div>
+    <h1 class="success-title">Récompense échangée !</h1>
+    <p class="success-subtitle">{{ message }}</p>
+
+    {# ── Carte de résumé ── #}
+    <div class="summary-card">
+        <div class="summary-row">
+            <span class="summary-label">Récompense obtenue</span>
+            <span class="summary-value">{{ reward.name }}</span>
+        </div>
+
+        <div class="summary-row">
+            <span class="summary-label">Points dépensés</span>
+            <span class="summary-value points-spent">- {{ reward.points_required|number_format }} pts</span>
+        </div>
+
+        <div class="summary-row summary-total">
+            <span class="summary-label">Nouveau solde</span>
+            <span class="summary-value points-balance">{{ user_points|number_format }} pts</span>
+        </div>
+    </div>
+
+    {# ── Boutons d'action ── #}
+    <div class="action-buttons">
+        <a href="/rewards" class="btn btn-primary">Retour au catalogue</a>
+        <a href="/dashboard" class="btn btn-secondary">Voir mes transactions</a>
+    </div>
+</div>
+
+<style>
+/* ── Layout centré ── */
+.success-container {
+    max-width: 520px;
+    margin: 60px auto;
+    padding: 40px 24px;
+    text-align: center;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    border: 1px solid #dee2e6;
+}
+
+/* ── Icône ── */
+.success-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+}
+
+/* ── Textes ── */
+.success-title {
+    margin: 0 0 8px;
+    color: #155724;
+    font-size: 1.8rem;
+}
+
+.success-subtitle {
+    color: #555;
+    margin: 0 0 32px;
+    font-size: 1rem;
+}
+
+/* ── Carte résumé ── */
+.summary-card {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 32px;
+    text-align: left;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.summary-row:last-child {
+    border-bottom: none;
+}
+
+.summary-label {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.summary-value {
+    font-weight: 600;
+    color: #333;
+}
+
+.points-spent {
+    color: #dc3545;
+}
+
+.points-balance {
+    color: #007bff;
+    font-size: 1.1rem;
+}
+
+/* ── Ligne totale ── */
+.summary-total {
+    background: #e8f4fd;
+    margin: 0 -24px;
+    padding: 14px 24px;
+    border-radius: 0 0 8px 8px;
+    border-bottom: none !important;
+}
+
+/* ── Boutons ── */
+.action-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.25s, transform 0.15s;
+}
+
+.btn-primary {
+    background: #007bff;
+    color: #fff;
+}
+.btn-primary:hover {
+    background: #0056b3;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: #fff;
+}
+.btn-secondary:hover {
+    background: #545b62;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+    .success-container { margin: 24px 12px; padding: 28px 16px; }
+    .action-buttons    { flex-direction: column; }
+}
+</style>
+{% endblock %}

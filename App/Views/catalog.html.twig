@@ -13,24 +13,24 @@
         </div>
         
         <div class="filter-options">
-            <a href="/rewards" class="filter-btn {% if filter != 'affordable' %}active{% endif %}">
+            <a href="/Loyalty%20Points%20System/App/public//rewards" class="filter-btn {% if filter != 'affordable' %}active{% endif %}">
                 All Rewards
             </a>
-            <a href="/rewards/affordable" class="filter-btn {% if filter == 'affordable' %}active{% endif %}">
+            <a href="/Loyalty%20Points%20System/App/public/rewards/affordable" class="filter-btn {% if filter == 'affordable' %}active{% endif %}">
                 Affordable Rewards
             </a>
         </div>
     </div>
     
-    {% if session.success %}
+    {% if success %}
         <div class="alert alert-success">
-            {{ session.success }}
+            {{ success }}
         </div>
     {% endif %}
     
-    {% if session.error %}
+    {% if error %}
         <div class="alert alert-error">
-            {{ session.error }}
+            {{ error }}
         </div>
     {% endif %}
     
@@ -86,7 +86,7 @@
                         
                             <div class="action-buttons">
 
-                                <form action="/shopeasy-loyalty/public/rewards/redeem/{{ reward.id }}" method="POST" style="flex: 1;">
+                                <form action="/Loyalty%20Points%20System/App/public/rewards/redeem/{{ reward.id }}" method="POST" style="flex: 1;">
                                     <input type="hidden" name="confirmation" value="on">
                                     
                                     <button type="submit" class="btn btn-redeem" onclick="return confirm('Are you sure you want to redeem this reward?')">
@@ -94,14 +94,14 @@
                                     </button>
                                 </form>
                                 
-                                <a href="/shopeasy-loyalty/public/rewards/show/{{ reward.id }}" class="btn btn-details">
+                                <a href="/Loyalty%20Points%20System/App/public/rewards/show/{{ reward.id }}" class="btn btn-details">
                                     Details
                                 </a>
                             </div>
                         {% else %}
                             <div class="cannot-redeem">
                                 <p>Not enough points</p>
-                                <a href="/shopeasy-loyalty/public/rewards/show/{{ reward.id }}" class="btn btn-details">
+                                <a href="/rewards/show/{{ reward.id }}" class="btn btn-details">
                                     View Details
                                 </a>
                             </div>
@@ -109,7 +109,7 @@
                     {% else %}
                         <div class="out-of-stock">
                             <p>Currently unavailable</p>
-                            <a href="/shopeasy-loyalty/public/rewards/show/{{ reward.id }}" class="btn btn-details">
+                            <a href="/Loyalty%20Points%20System/App/public/rewards/show/{{ reward.id }}" class="btn btn-details">
                                 View Details
                             </a>
                         </div>
@@ -125,7 +125,7 @@
                 {% if filter == 'affordable' %}
                     <p>You don't have enough points for any rewards yet.</p>
                     <p>Keep shopping to earn more points!</p>
-                    <a href="/shopeasy-loyalty/public/rewards" class="btn btn-primary">View All Rewards</a>
+                    <a href="/Loyalty%20Points%20System/App/public/rewards" class="btn btn-primary">View All Rewards</a>
                 {% else %}
                     <p>No rewards are currently available.</p>
                     <p>Please check back later.</p>
