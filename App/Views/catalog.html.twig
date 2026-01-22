@@ -1,0 +1,82 @@
+    {% block stylesheets %}<link rel="stylesheet" href="/Loyalty%20Points%20System/App/public/assets/css/login.css">{% endblock %}
+
+{% extends 'layouts/base.twig' %}
+
+{% block title %}Rewards Catalog - ShopEasy Loyalty{% endblock %}
+
+{% block content %}
+<div class="catalog-wrapper">
+    <header class="catalog-header">
+        <div class="header-content">
+            <h1>Rewards Catalog</h1>
+            <p class="subtitle">Redeem your hard-earned points for exclusive perks</p>
+        </div>
+        <div class="user-wallet">
+            <div class="wallet-icon">
+                <i class="fas fa-coins"></i> </div>
+            <div class="wallet-info">
+                <span class="label">Balance</span>
+                <span class="value">{{ user_points|number_format }} <small>pts</small></span>
+            </div>
+        </div>
+    </header>
+
+    <nav class="filter-bar">
+        <a href="/rewards" class="filter-link {% if filter != 'affordable' %}active{% endif %}">
+            All Items
+        </a>
+        <a href="/rewards/affordable" class="filter-link {% if filter == 'affordable' %}active{% endif %}">
+            What I can afford
+        </a>
+    </nav>
+
+    {% include 'partials/alerts.twig' %} <div class="rewards-grid">
+        {% for reward in rewards %}
+            {% set can_afford = user_points >= reward.points_required %}
+            {% set progress = (user_points / reward.points_required * 100)|round(0, 'floor') %}
+            {% if progress > 100 %}{% set progress = 100 %}{% endif %}
+
+            <div class="reward-item {% if not can_afford %}locked{% endif %}">
+                <div class="reward-badge">{{ reward.points_required|number_format }} pts</div>
+                
+                <div class="reward-main">
+                    <h3>{{ reward.name }}</h3>
+                    <p class="description">{{ reward.description|slice(0, 80) }}...</p>
+                    
+                    <div class="status-tag">
+                        {% if reward.stock == 0 %}
+                            <span class="tag out">Out of Stock</span>
+                        {% else %}
+                            <span class="tag in">{{ reward.stock > 0 ? reward.stock ~ ' left' : 'Available' }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="reward-progress-area">
+                    <div class="progress-label">
+                        <span>Goal Progress</span>
+                        <span>{{ progress }}%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-fill" style="width: {{ progress }}%"></div>
+                    </div>
+                    {% if not can_afford %}
+                        <p class="need-more">Need <strong>{{ (reward.points_required - user_points)|number_format }}</strong> more points</p>
+                    {% endif %}
+                </div>
+
+                <div class="reward-actions">
+                    {% if reward.stock > 0 and can_afford %}
+                        <form action="/shopeasy-loyalty/public/rewards/redeem/{{ reward.id }}" method="POST">
+                            <input type="hidden" name="confirmation" value="on">
+                            <button type="submit" class="btn btn-primary" onclick="return confirm('Confirm redemption?')">
+                                Redeem Now
+                            </button>
+                        </form>
+                    {% endif %}
+                    <a href="/shopeasy-loyalty/public/rewards/show/{{ reward.id }}" class="btn btn-outline">Details</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
