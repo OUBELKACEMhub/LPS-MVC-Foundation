@@ -42,6 +42,3 @@ class Database {
 $db = Database::getInstance();
 $pdo = $db->getConnection();
 
-if ($pdo) {
-    echo "Connected successfully!";
-}
