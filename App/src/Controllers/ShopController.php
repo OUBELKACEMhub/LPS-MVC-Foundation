@@ -131,7 +131,7 @@ public function updateCart(): void
                 'cart_total' => $this->cart->getTotal(),
                 'loyalty_points' => $this->cart->calculateLoyaltyPoints(),
                 'checkout_error' => $checkoutError,
-                'loyalty_pointsActuel' => $_SESSION['user_points'] ?? 0 // Khdemna b user_points
+                'loyalty_pointsActuel' => $_SESSION['user_points'] ?? 0 
             ]
         ));
     }
