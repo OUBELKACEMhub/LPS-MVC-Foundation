@@ -1,51 +1,49 @@
 <?php
-session_start();
-use App\src\Controllers\HomeController;
-use App\src\Core\Database;
-use App\src\Repositories\ProductRepository;
 require_once __DIR__ . '/../../vendor/autoload.php';
 
+use App\src\Core\Router;
+use App\src\Core\Database;
+use App\src\Controllers\HomeController;
+use App\src\Controllers\AuthController;
+use App\src\Controllers\ShopController;
+use App\src\Repositories\ProductRepository;
+use App\src\Repositories\UserRepository;
 
-// 1. Config dial Twig
+session_start();
+// 1. Initialisation dyal les dépendances
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../Views');
-$twig = new \Twig\Environment($loader, [
-    'cache' => false, 
-]);
+$twig = new \Twig\Environment($loader, ['cache' => false]);
+$pdo = Database::getInstance()->getConnection();
 
-$request = $_SERVER['REQUEST_URI'];
-echo $request ;
-$route = str_replace('/Loyalty%20Points%20System/App/public', '', $request);
-$route = rtrim($route, '/');
+// 2. Configuration dyal l-Router
+$router = new Router();
 
-// 3. Wjjeh l-user l-Twig templates
-switch ($route) {
-    case '':
-    case '/':
-        $pdo = Database::getInstance()->getConnection();
-        $productRepo = new ProductRepository($pdo); 
-        $controller = new HomeController($twig, $productRepo); 
-        $controller->index();
-        break;
+$router->get('/', [HomeController::class, 'index']);
 
-    case '/login':
-        echo $twig->render('login.html.twig', [
-            'title' => 'Contactez-nous'
-        ]);
-        break;
+$router->get('/login', [AuthController::class, 'login']);
+$router->post('/login', [AuthController::class, 'login']);
 
-    case '/cart':
-        echo $twig->render('cart.html.twig', [
-            'title' => 'cart'
-        ]);
-        break; 
-    case '/dashboard':
-        echo $twig->render('userDashboard.html.twig', [
-            'title' => 'user Dashboard'
-        ]);
-        break;       
+$router->get('/register', [AuthController::class, 'register']);
+$router->post('/register', [AuthController::class, 'register']);
 
-    default:
-        http_response_code(404);
-        echo $twig->render('404.html.twig');
-        break;
-}
+$router->get('/logout', [AuthController::class, 'logout']);
+
+$router->get('/cart', [ShopController::class, 'cart']);
+
+$router->post('/cart', [ShopController::class, 'addToCart']);
+
+$router->post('/cart/remove', [ShopController::class, 'removeFromCart']);
+$router->post('/cart/update', [ShopController::class, 'updateCart']);
+$router->get('/cart/checkout', [ShopController::class, 'checkout']);
+ $router->post('/process_checkout', [ShopController::class, 'processCheckout']);
+ $router->get('/purchase-result', [ShopController::class, 'purchaseResult']);
+
+// 3. Lancer l-Routing
+$productRepo = new ProductRepository($pdo);
+$userRepo = new UserRepository($pdo);
+
+
+$requestUri = $_SERVER['REQUEST_URI'];
+$requestMethod = $_SERVER['REQUEST_METHOD'];
+
+$router->dispatch($requestUri, $requestMethod, [$twig, $pdo, $productRepo, $userRepo]);
