@@ -9,6 +9,10 @@ class User {
     private $total_points;
     private $created_at;
 
+<<<<<<< HEAD
+=======
+    // Constructeur
+>>>>>>> 706d3b2ed64b199b83aa6b06be8a83c763e0e624
     public function __construct($id, $email, $password, $name, $total_points = 100, $created_at = null) {
         $this->id = $id;
         $this->email = $email;

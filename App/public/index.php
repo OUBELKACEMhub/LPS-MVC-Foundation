@@ -37,6 +37,7 @@ $router->post('/cart/update', [ShopController::class, 'updateCart']);
 $router->get('/cart/checkout', [ShopController::class, 'checkout']);
  $router->post('/process_checkout', [ShopController::class, 'processCheckout']);
  $router->get('/purchase-result', [ShopController::class, 'purchaseResult']);
+ $router->get('/purchase-result', [RewardsController::class, 'index']);
 
 // 3. Lancer l-Routing
 $productRepo = new ProductRepository($pdo);
